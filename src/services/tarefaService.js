@@ -17,4 +17,4 @@ async function buscarTarefaPorId(id) {
   return linhas[0];
 }
 
-module.exports = { listarTarefas, buscarporid};
+module.exports = { listarTarefas, buscartarefaporid};
