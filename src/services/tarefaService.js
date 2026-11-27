@@ -7,9 +7,14 @@ const PRIORIDADES = ["baixa", "media", "alta"];
 const STATUS = ["a_fazer", "fazendo", "feita"];
 
 async function listarTarefas(filtros) {
-const [linhas] = await db.query("SELECT * FROM tarefas");
-let resultado = linhas;
-return resultado;
+  const [linhas] = await db.query("SELECT * FROM tarefas");
+  let resultado = linhas;
+  return resultado;
+}
+
+async function buscarTarefaPorId(id) {
+  const [linhas] = await db.query("SELECT * FROM tarefas WHERE id = ?", [id]);
+  return linhas[0];
 }
 
 module.exports = { listarTarefas };
