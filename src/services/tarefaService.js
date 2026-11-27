@@ -9,6 +9,15 @@ const STATUS = ["a_fazer", "fazendo", "feita"];
 async function listarTarefas(filtros) {
   const [linhas] = await db.query("SELECT * FROM tarefas");
   let resultado = linhas;
+  if (filtros.status) {
+  resultado = resultado.filter((tarefa) => tarefa.status === filtros.status);
+}
+if (filtros.prioridade) {
+  resultado = resultado.filter(
+    (tarefa) => tarefa.prioridade === filtros.prioridade,
+  );
+}
+
   return resultado;
 }
 
@@ -65,5 +74,22 @@ function validarTarefa(dados, completo) {
   return null;
 }
 
+function validarTarefa(dados, completo) {
+  if (!dados) return "Envie os dados da tarefa em JSON";
+  if (completo && !dados.titulo) return "O titulo e obrigatorio";
+  if (completo && !dados.prioridade) return "A prioridade e obrigatoria";
+  if (completo && !dados.status) return "O status e obrigatorio";
+  if (
+    dados.prioridade !== undefined &&
+    !PRIORIDADES.includes(dados.prioridade)
+  ) {
+    return "A prioridade deve ser baixa, media ou alta";
+  }
+  if (dados.status !== undefined && !STATUS.includes(dados.status)) {
+    return "O status deve ser a_fazer, fazendo ou feita";
+  }
+  return null;
+}
 
-module.exports = { listarTarefas, buscarTarefaPorId, criarTarefa, atualizarTarefa, atualizarParcialTarefa, deletarTarefa };
+
+module.exports = { listarTarefas, buscarTarefaPorId, criarTarefa, atualizarTarefa, atualizarParcialTarefa, deletarTarefa, validarTarefa };
