@@ -16,4 +16,9 @@ async function buscarPorId(req, res) {
   res.status(200).json(tarefa);
 }
 
-module.exports = { listar, buscarPorId };
+async function criar(req, res) {
+const novaTarefa = await tarefaService.criarTarefa(req.body);
+res.status(201).json(novaTarefa);
+}
+
+module.exports = { listar, buscarPorId, criar };
