@@ -21,4 +21,6 @@ const novaTarefa = await tarefaService.criarTarefa(req.body);
 res.status(201).json(novaTarefa);
 }
 
+
+
 module.exports = { listar, buscarPorId, criar };
